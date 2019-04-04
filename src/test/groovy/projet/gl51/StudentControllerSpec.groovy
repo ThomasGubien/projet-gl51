@@ -18,8 +18,10 @@ class StudentControllerSpec extends Specification {
     void "test index"() {
         given:
         HttpResponse response = client.toBlocking().exchange("/student")
+        List<Student> l = response.body()
 
         expect:
         response.status == HttpStatus.OK
+		l instanceof List<Student>
     }
 }
