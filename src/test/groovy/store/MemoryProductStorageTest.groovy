@@ -1,33 +1,36 @@
 package store
+import spock.lang.Specification
 
-class MemoryProductStorageTest extends GroovyTestCase {
-    void testSave() {
+class MemoryProductStorageTest extends Specification {
+
+    ProductStorage store = new MemoryProductStorage()
+
+    def "empty storage returns empty list"() {
+        expect:
+            store.all() == []
     }
 
-    void testUpdate() {
+
+    def "adding a product returns the product in the list"(){
+        setup:
+        store.save(new Product(name: "myProduct"))
+
+        when:
+        def all = store.all()
+
+        then:
+        all.size() == 1
+        all.first().name == "myProduct"
     }
 
-    void testGetByID() {
-    }
+    def "adding a product will generate a new id"(){
+        setup:
+        store.save(new Product(name: "myProduct"))
 
-    void testDelete() {
-    }
+        when:
+        store.save(new Product(name: "myNewProduct"))
 
-    void testAll() {
-    }
-
-    void testInvokeMethod() {
-    }
-
-    void testGetProperty() {
-    }
-
-    void testSetProperty() {
-    }
-
-    void testGetMetaClass() {
-    }
-
-    void testSetMetaClass() {
+        then:
+        store
     }
 }

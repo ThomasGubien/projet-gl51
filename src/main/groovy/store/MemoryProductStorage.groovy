@@ -1,9 +1,14 @@
 package store
 
 class MemoryProductStorage implements ProductStorage{
-    @Override
-    void save(Product p) {
 
+    private Map<String, Product> products = [:]
+
+    @Override
+    String save(Product p) {
+        products.put(UUID.randomUUID(), p)
+        all()
+        products
     }
 
     @Override
@@ -23,6 +28,6 @@ class MemoryProductStorage implements ProductStorage{
 
     @Override
     List<Product> all() {
-        return null
+        products.values().toList()
     }
 }
