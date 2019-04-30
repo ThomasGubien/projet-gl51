@@ -2,13 +2,13 @@ package store
 
 class MemoryProductStorage implements ProductStorage{
 
-    private Map<String, Product> products = [:]
+    private Map<UUID, Product> products = [:]
 
     @Override
     String save(Product p) {
-        products.put(UUID.randomUUID(), p)
+        p.id = UUID.randomUUID()
+        products.put(p.id, p)
         all()
-        products
     }
 
     @Override

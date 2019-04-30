@@ -29,8 +29,9 @@ class MemoryProductStorageTest extends Specification {
 
         when:
         store.save(new Product(name: "myNewProduct"))
+        def all = store.all()
 
         then:
-        store
+        all.find({p -> p.name == "myProduct"}).id != all.find({p -> p.name == "myNewProduct"}).id
     }
 }
