@@ -1,7 +1,7 @@
 package store
 
 class Product {
-    UUID id
+    String id
     String name
     String description
     double price
