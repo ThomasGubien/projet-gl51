@@ -1,37 +1,29 @@
 package store
 
-interface ProductStorage<P> {
+interface ProductStorage {
 
-    /**
-     * creates an new product in the store
-     * @param p the product to store
-     * @retrun the id
-     */
-    String save(Product p)
+    List<Product> productList
+    int maxStorageSize
 
-    /**
-     * updates an existing product in the store
-     * Beware the product id must be filled in
-     * @param p the product to update
-     */
-    void update(String id, Product p)
+    //Lister les produits
+    List<Product> getAllProducts()
 
-    /**
-     * get a product by its id
-     * @param id
-     * @return a product
-     */
-    Product getByID(String id)
+    //Selectionner les produits d'un type donné
+    List<Product> getAllProductsFromType(int i)
 
-    /**
-     * deletes a product by its id
-     * @param id
-     */
-    void delete(String id)
+    //Trier la liste par type
+    int orderByType()
 
-    /**
-     * list all products
-     * @return a list of products
-     */
-    List<Product> all()
+    //Assez de place dans le stock
+    boolean isThereEnoughSpace()
+
+    //Ajouter produit
+    void store(Product p)
+
+    //Retirer produit
+    int delete(int i)
+
+    //Mettre à jour un produit
+    int modify(int i, Product p)
+
 }
