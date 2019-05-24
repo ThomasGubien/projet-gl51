@@ -30,7 +30,7 @@ class ProductControllerTest extends Specification {
 
     void "test create and get"() {
         setup:
-        Product sentProduct = new Product(name: name, description: description, price: price, idealTemperature: idealTemperature)
+        Product sentProduct = new Product(name: "myProduct", description: "product", price: 15, idealTemperature: 10)
 
         when:
         String id = client.toBlocking().retrieve(HttpRequest.POST('/store/product', sentProduct))
@@ -40,48 +40,33 @@ class ProductControllerTest extends Specification {
         id != ""
         getProduct != null
         getProduct.equals(sentProduct)
-
-        where:
-        name | description | price | idealTemperature
-        "myProduct" | "product" | 15 | 10
-        "myProduct2" | "product2" | 200 | 51
     }
 
     void "test update"() {
         setup:
-        String id = client.toBlocking().retrieve(HttpRequest.POST('/store/product', new Product(name: name, description: description, price: price, idealTemperature: idealTemperature)))
+        String id = client.toBlocking().retrieve(HttpRequest.POST('/store/product', new Product(name: "myProduct", description: "product", price: 15, idealTemperature: 10)))
 
         when:
-        Product newProduct = new Product(name: name1, description: description1, price: price1, idealTemperature: idealTemperature1)
-        HttpStatus status = client.toBlocking().retrieve(HttpRequest.PATCH('/store/product/'+id, newProduct), Argument.of(HttpStatus).type)
+        Product p = new Product(name: "myProduct2", description: "product2", price: 200, idealTemperature: 51)
+        HttpStatus status = client.toBlocking().retrieve(HttpRequest.PATCH('/store/product/'+id, p), Argument.of(HttpStatus).type)
         Product afterProduct = client.toBlocking().retrieve(HttpRequest.GET('/store/product/'+id), Argument.of(Product).type)
 
         then:
         status.equals(HttpStatus.OK)
-        newProduct.equals(afterProduct)
-
-        where:
-        name | description | price | idealTemperature | name1 | description1 | price1| idealTemperature1
-        "myProduct" | "product" | 15 | 10 | "myProduct2" | "product2" | 200 | 51
-        "myProduct2" | "product2" | 200 | 51 | "myProduct" | "product" | 15 | 10
+        p.equals(afterProduct)
     }
 
     void "test delete"() {
         setup:
-        String id = client.toBlocking().retrieve(HttpRequest.POST('/store/product', new Product(name: name, description: description, price: price, idealTemperature: idealTemperature)))
+        String id = client.toBlocking().retrieve(HttpRequest.POST('/store/product', new Product(name: "myProduct", description: "product", price: 15, idealTemperature: 10)))
 
         when:
         HttpStatus status = client.toBlocking().retrieve(HttpRequest.DELETE('/store/product/'+id), Argument.of(HttpStatus).type)
-        Product product = client.toBlocking().retrieve(HttpRequest.GET('/store/product/'+id), Argument.of(Product).type)
+        Product p = client.toBlocking().retrieve(HttpRequest.GET('/store/product/'+id), Argument.of(Product).type)
 
         then:
         status.equals(HttpStatus.OK)
         thrown HttpClientResponseException
-        product == null
-
-        where:
-        name | description | price | idealTemperature
-        "myProduct" | "product" | 15 | 10
-        "myProduct2" | "product2" | 200 | 51
+        p == null
     }
 }
