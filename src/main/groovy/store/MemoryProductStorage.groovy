@@ -3,6 +3,9 @@ package store
 import store.exceptions.NotExistingProductException
 import store.exceptions.WrongIdException
 
+import javax.inject.Singleton
+
+@Singleton
 class MemoryProductStorage implements ProductStorage {
 
     private Map<String, Product> products = new HashMap<>()
