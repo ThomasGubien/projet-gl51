@@ -1,6 +1,8 @@
 plugins {
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "com.github.johnrengelman.shadow" version "4.0.2"
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.8.2'
 }
 
 apply plugin:"application"
@@ -44,4 +46,11 @@ mainClassName = "projet.gl51.Application"
 
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
 }
