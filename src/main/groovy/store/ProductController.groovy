@@ -16,7 +16,8 @@ import io.micronaut.http.HttpStatus
 @Controller("/store/product")
 class ProductController {
 
-    ProductStorage storage = new MemoryProductStorage()
+    @Inject
+    ProductStorage storage
 
     @Get("/")
     List<Product> index() {
