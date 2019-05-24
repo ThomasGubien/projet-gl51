@@ -43,8 +43,8 @@ class ProductControllerTest extends Specification {
 
         where:
         name | description | price | idealTemperature
-        "Ordi" | "Ordinateur" | 1500 | 10
-        "Table" | "Grande table" | 2000 | 5
+        "myProduct" | "product" | 15 | 10
+        "myProduct2" | "product2" | 200 | 51
     }
 
     void "test update"() {
@@ -62,8 +62,8 @@ class ProductControllerTest extends Specification {
 
         where:
         name | description | price | idealTemperature | name1 | description1 | price1| idealTemperature1
-        "Ordi" | "Ordinateur" | 1500 | 10 | "Table" | "Grande table" | 2000 | 5
-        "Table" | "Grande table" | 2000 | 5 | "Ordi" | "Ordinateur" | 1500 | 10
+        "myProduct" | "product" | 15 | 10 | "myProduct2" | "product2" | 200 | 51
+        "myProduct2" | "product2" | 200 | 51 | "myProduct" | "product" | 15 | 10
     }
 
     void "test delete"() {
@@ -81,7 +81,7 @@ class ProductControllerTest extends Specification {
 
         where:
         name | description | price | idealTemperature
-        "Ordi" | "Ordinateur" | 1500 | 10
-        "Table" | "Grande table" | 2000 | 5
+        "myProduct" | "product" | 15 | 10
+        "myProduct2" | "product2" | 200 | 51
     }
 }
